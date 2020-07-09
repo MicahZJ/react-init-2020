@@ -1,3 +1,72 @@
+## 2020-07-10 配置vw自适应布局
+### 下包
+```
+npm i -S cssnano postcss-viewport-units postcss-aspect-ratio-mini postcss-px-to-viewport-opt postcss-write-svg postcss-preset-env
+```
+### 配置webpack.config文件
+```
+// 在文件头部导入下载的包
+const postcssAspectRatioMini = require('postcss-aspect-ratio-mini');
+const postcssPxToViewport = require('postcss-px-to-viewport-opt');
+const postcssWriteSvg = require('postcss-write-svg');
+const postcssPresetEnv = require('postcss-preset-env')
+const postcssViewportUnits = require('postcss-viewport-units');
+const cssnano = require('cssnano');
+```
+```
+// 找到postcss部分，在下面加入配置项
+{
+    // Options for PostCSS as we reference these options twice
+    // Adds vendor prefixing based on your specified browser support in
+    // package.json
+    loader: require.resolve('postcss-loader'),
+    options: {
+      // Necessary for external CSS imports to work
+      // https://github.com/facebook/create-react-app/issues/2677
+      ident: 'postcss',
+      plugins: () => [
+        require('postcss-flexbugs-fixes'),
+        require('postcss-preset-env')({
+          autoprefixer: {
+            flexbox: 'no-2009',
+          },
+          stage: 3,
+        }),
+        // Adds PostCSS Normalize as the reset css with default options,
+        // so that it honors browserslist config in package.json
+        // which in turn let's users customize the target behavior as per their needs.
+        postcssNormalize(),
+        
+        // 在这个位置加入VW需要的配置的
+        postcssAspectRatioMini({}),
+        postcssPxToViewport({
+          viewportWidth: 1920, // (Number) The width of the viewport.
+          viewportHeight: 1080, // (Number) The height of the viewport.
+          unitPrecision: 3, // (Number) The decimal numbers to allow the REM units to grow to.
+          viewportUnit: 'vw', // (String) Expected units.
+          selectorBlackList: ['.ignore', '.hairlines', '.antd'], // (Array) The selectors to ignore and leave as px.
+          minPixelValue: 1, // (Number) Set the minimum pixel value to replace.
+          mediaQuery: false, // (Boolean) Allow px to be converted in media queries.
+          exclude: /(\/|\\)(node_modules)(\/|\\)/
+        }),
+        postcssWriteSvg({
+          utf8: false
+        }),
+        postcssPresetEnv({}),
+        postcssViewportUnits({}),
+        cssnano({
+          'cssnano-preset-advanced': {
+            zindex: false,
+            autoprefixer: false
+          }
+        }),
+        // 在这个位置加入VW需要的配置
+      ],
+      sourceMap: isEnvProduction && shouldUseSourceMap,
+    },
+},
+```
+
 ## 配置了mobx，stylus，router-dom，antd
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

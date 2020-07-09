@@ -23,7 +23,7 @@ export default class CommentHomePage extends Component {
   
   render() {
     return (
-      <div>666</div>
+      <div className={Style['home-wrapper']}>666</div>
     )
   }
 }

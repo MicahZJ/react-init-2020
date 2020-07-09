@@ -49,9 +49,18 @@ const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
+
 // 增加stylus配置
-const stylusRegex =/\.styl$/;
-const stylusModuleRegex=/\.module\.styl$/;
+const stylusRegex = /\.styl$/;
+const stylusModuleRegex = /\.module\.styl$/;
+
+// 增加vw配置
+const postcssAspectRatioMini = require('postcss-aspect-ratio-mini');
+const postcssPxToViewport = require('postcss-px-to-viewport-opt');
+const postcssWriteSvg = require('postcss-write-svg');
+const postcssPresetEnv = require('postcss-preset-env')
+const postcssViewportUnits = require('postcss-viewport-units');
+const cssnano = require('cssnano');
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -107,6 +116,31 @@ module.exports = function(webpackEnv) {
             // so that it honors browserslist config in package.json
             // which in turn let's users customize the target behavior as per their needs.
             postcssNormalize(),
+            
+            // 在这个位置加入VW需要的配置的
+            postcssAspectRatioMini({}),
+            postcssPxToViewport({
+              viewportWidth: 1920, // (Number) The width of the viewport.
+              viewportHeight: 1080, // (Number) The height of the viewport.
+              unitPrecision: 3, // (Number) The decimal numbers to allow the REM units to grow to.
+              viewportUnit: 'vw', // (String) Expected units.
+              selectorBlackList: ['.ignore', '.hairlines', '.antd'], // (Array) The selectors to ignore and leave as px.
+              minPixelValue: 1, // (Number) Set the minimum pixel value to replace.
+              mediaQuery: false, // (Boolean) Allow px to be converted in media queries.
+              exclude: /(\/|\\)(node_modules)(\/|\\)/
+            }),
+            postcssWriteSvg({
+              utf8: false
+            }),
+            postcssPresetEnv({}),
+            postcssViewportUnits({}),
+            cssnano({
+              'cssnano-preset-advanced': {
+                zindex: false,
+                autoprefixer: false
+              }
+            }),
+            // 在这个位置加入VW需要的配置
           ],
           sourceMap: isEnvProduction && shouldUseSourceMap,
         },
@@ -183,12 +217,12 @@ module.exports = function(webpackEnv) {
       publicPath: paths.publicUrlOrPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: isEnvProduction
-        ? info =>
-            path
-              .relative(paths.appSrc, info.absoluteResourcePath)
-              .replace(/\\/g, '/')
+        ? (info) =>
+          path
+            .relative(paths.appSrc, info.absoluteResourcePath)
+            .replace(/\\/g, '/')
         : isEnvDevelopment &&
-          (info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
+          ((info) => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/')),
       // Prevents conflicts when multiple webpack runtimes (from different apps)
       // are used on the same page.
       jsonpFunction: `webpackJsonp${appPackageJson.name}`,
@@ -246,13 +280,13 @@ module.exports = function(webpackEnv) {
             parser: safePostCssParser,
             map: shouldUseSourceMap
               ? {
-                  // `inline: false` forces the sourcemap to be output into a
-                  // separate file
-                  inline: false,
-                  // `annotation: true` appends the sourceMappingURL to the end of
-                  // the css file, helping the browser find the sourcemap
-                  annotation: true,
-                }
+                // `inline: false` forces the sourcemap to be output into a
+                // separate file
+                inline: false,
+                // `annotation: true` appends the sourceMappingURL to the end of
+                // the css file, helping the browser find the sourcemap
+                annotation: true,
+              }
               : false,
           },
           cssProcessorPluginOptions: {
@@ -271,7 +305,7 @@ module.exports = function(webpackEnv) {
       // https://twitter.com/wSokra/status/969679223278505985
       // https://github.com/facebook/create-react-app/issues/5358
       runtimeChunk: {
-        name: entrypoint => `runtime-${entrypoint.name}`,
+        name: (entrypoint) => `runtime-${entrypoint.name}`,
       },
     },
     resolve: {
@@ -289,8 +323,8 @@ module.exports = function(webpackEnv) {
       // `web` extension prefixes have been added for better support
       // for React Native Web.
       extensions: paths.moduleFileExtensions
-        .map(ext => `.${ext}`)
-        .filter(ext => useTypeScript || !ext.includes('ts')),
+        .map((ext) => `.${ext}`)
+        .filter((ext) => useTypeScript || !ext.includes('ts')),
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -547,19 +581,19 @@ module.exports = function(webpackEnv) {
           },
           isEnvProduction
             ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
+              minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+              },
+            }
             : undefined
         )
       ),
@@ -618,7 +652,7 @@ module.exports = function(webpackEnv) {
             return manifest;
           }, seed);
           const entrypointFiles = entrypoints.main.filter(
-            fileName => !fileName.endsWith('.map')
+            (fileName) => !fileName.endsWith('.map')
           );
 
           return {

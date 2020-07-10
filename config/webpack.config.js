@@ -122,8 +122,8 @@ module.exports = function(webpackEnv) {
             postcssPxToViewport({
               viewportWidth: 1920, // (Number) The width of the viewport.
               viewportHeight: 1080, // (Number) The height of the viewport.
-              unitPrecision: 3, // (Number) The decimal numbers to allow the REM units to grow to.
-              viewportUnit: 'vw', // (String) Expected units.
+              unitPrecision: 3, // (Number) The decimal numbers to allow the REM utils to grow to.
+              viewportUnit: 'vw', // (String) Expected utils.
               selectorBlackList: ['.ignore', '.hairlines', '.antd'], // (Array) The selectors to ignore and leave as px.
               minPixelValue: 1, // (Number) Set the minimum pixel value to replace.
               mediaQuery: false, // (Boolean) Allow px to be converted in media queries.

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import asyncComponent from './units/asyncComponent'
+import asyncComponent from './utils/asyncComponent'
 import { Link, Route, BrowserRouter as Router} from 'react-router-dom'
 import homePage from './views/home_page/index'
 import NavBar from './component/nav_bar/index'

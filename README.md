@@ -321,7 +321,80 @@ const cssnano = require('cssnano');
 },
 ```
 
-## 配置了mobx，stylus，router-dom，antd
+## 2020-05-17配置了mobx，stylus，router-dom，antd
+## mobx配置
+### 下包
+```
+npm i -S mobx mobx-react
+```
+### 在src下新建store文件夹，并创建index.js
+```
+import { configure } from 'mobx';
+
+import HomePage from '../views/home_page/store'
+import NavBar from '../component/nav_bar/store'
+import MenuBar from '../component/menu_bar/store'
+import InfoPage from '../views/info_page/store'
+import LoginPage from '../views/login_page/store'
+import NotPage from '../views/404_page/store'
+
+configure({ enforceActions: 'always' });
+
+class AppStore {
+  constructor () {
+    this.homePageStore = new HomePage(this);
+    this.navBarStore = new NavBar(this);
+    this.menuBarStore = new MenuBar(this);
+    this.infoStore = new InfoPage(this);
+    this.loginStore = new LoginPage(this);
+    this.notStore = new NotPage(this)
+  }
+}
+
+export default new AppStore()
+
+```
+### 在每个页面下建立store.js
+
+## 配置stylus
+### 下包
+```
+npm i -D stylus stylus-loader
+```
+### 在webpack.config.js配置
+找到rules数组下的oneOf，看到这里都是配置是css，js等文件的loader，在下面增加
+```
+ { // 配置 stylus
+              test: stylusRegex,
+              exclude: stylusModuleRegex,
+              use: getStyleLoaders(
+                {
+                  importLoaders: 2,
+                  sourceMap: isEnvProduction && shouldUseSourceMap,
+                  modules: true, // 设置模块化
+                },
+                'stylus-loader'
+              ),
+              sideEffects: true,
+            },
+```
+## 配置react-router-dom
+### 下包
+```
+npm i -D react-router-dom
+```
+### 配置
+在AppRouter.js 配置
+
+在文件页面配置，并使用witherRouter注解
+
+## 配置antd
+### 下包
+```
+npm i -S antd
+```
+### 配置
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

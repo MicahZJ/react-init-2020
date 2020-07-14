@@ -10,8 +10,9 @@ export default class CommentNormal extends Component {
     super(props)
   }
   
+  a = '';  
+  
   componentDidMount() {
-    console.log('store', this.store)
   }
   
   componentWillUnmount() {
@@ -19,7 +20,7 @@ export default class CommentNormal extends Component {
   
   render() {
     return (
-      <div></div>
+      <div>{this.a}</div>
     )
   }
 }

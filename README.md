@@ -322,6 +322,8 @@ const cssnano = require('cssnano');
 ```
 
 ## 2020-05-17配置了mobx，stylus，router-dom，antd
+### 增加component组件内的普通页面模板normal_page
+### 增加component组件内的mobx页面模板store_page
 ## mobx配置
 ### 下包
 ```

@@ -23,22 +23,23 @@ export default class Store {
   
   @action
   async login (router) {
-    let api = '/Login/LoginCheck';
-    let requestData = {
-      userName: this.userName,
-      password: this.passWord
-    };
-    let res = await $postData(api, requestData).catch((err) => {
-      console.log('err', err)
-    });
-    
-    if (res) {
-      runInAction(() => {
-        console.log('success', res)
-        localStorage.setItem('token', 'true');
-        router.history.push('/home')
-      })
-    }
+    localStorage.setItem('token', 'true');
+    router.history.push('/home')
+    // let api = '/Login/LoginCheck';
+    // let requestData = {
+    //   userName: this.userName,
+    //   password: this.passWord
+    // };
+    // let res = await $postData(api, requestData).catch((err) => {
+    //   console.log('err', err)
+    // });
+    //
+    // if (res) {
+    //   runInAction(() => {
+    //     console.log('success', res)
+    //
+    //   })
+    // }
   }
   
   // @computed get c () {

@@ -21,13 +21,20 @@ export default class CommentHomePage extends Component {
   componentWillUnmount() {
   }
   
+  out = () => {
+    localStorage.clear()
+    location.reload()
+    // this.props.history.push('login')
+  }
+  
   render() {
     return (
-      <div className={Style['home-wrapper']}>666</div>
+      <div className={Style['home-wrapper']} onClick={() => {this.out()}}>666</div>
     )
   }
 }
 
 CommentHomePage.propTypes = {
-  homePageStore: PropTypes.object
+  homePageStore: PropTypes.object,
+  history: PropTypes.object
 };

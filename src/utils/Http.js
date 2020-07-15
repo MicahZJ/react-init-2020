@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import webConfig from './web_config'
+import webConfig from './webConfig'
 import ReactDOM from 'react-dom';
 import { message, Spin } from 'antd';
 

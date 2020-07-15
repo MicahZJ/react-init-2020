@@ -43,11 +43,15 @@ export default class AppRoute extends Component {
     let authPath = '/login';
     return (<Router>
       <Layout>
-        <NavBar name={'nav'}/>
+         {/* 当处于error和未登录的情况下，导航栏是不能出现的 */}
+        {location.pathname !== '/error' && localStorage.getItem('token') ? <NavBar name={'nav'}/> : null}
         <Layout>
-          <Sider width={256} style={{ background: 'white' }}>
-            <MenuBar name={'menu'}/>
-          </Sider>
+           {
+            location.pathname !== '/error' && localStorage.getItem('token')
+              ? <Sider width={256} style={{ background: 'white' }}>
+                <MenuBar name={'menu'}/>
+              </Sider> : null
+           }
           <Layout style={{width: 'calc(100vw - 256px)', height: 'calc(100vh - 50px)'}}>
             <Switch>
               {routes.map((item, index) => <Route key={index} path={item.path} exact render={(props) => {

@@ -20,20 +20,33 @@ export default class CommentNav extends Component {
     super(props)
     this.store = props.menuBarStore
   }
-  rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+  rootSubmenuKeys = ['admin', 'edit', 'sub4'];
   
   state = {
-    openKeys: ['sub1'],
+    openKeys: [],
   };
   
   componentDidMount() {
+    this.store.defaultSelected()
   }
   
   componentWillUnmount() {
   }
   
+  defaultSelected = () => {
+    const {pathname} = this.props.location
+    let key = pathname.split('/')[1]
+    console.log('a', key)
+    this.setState({
+      openKeys: [key]
+    });
+  }
+  
   onOpenChange = (openKeys) => {
+    console.log('openKeys', openKeys)
     const latestOpenKey = openKeys.find((key) => this.state.openKeys.indexOf(key) === -1);
+    console.log('1', latestOpenKey)
+    console.log('2', this.rootSubmenuKeys.indexOf(latestOpenKey))
     if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
       this.setState({ openKeys });
     } else {
@@ -43,18 +56,25 @@ export default class CommentNav extends Component {
     }
   };
   
+  clickMenu = (item) => {
+    console.log('item', item)
+  }
+  
   render() {
-    const {current} = this.store
+    const {pathname} = this.props.location
+    const {Keys} = this.store
+    console.log('path', pathname)
     return (
       <Menu
         mode="inline"
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={this.state.openKeys}
-        onOpenChange={this.onOpenChange}
+        selectedKeys={pathname}
+        openKeys={Keys}
+        onOpenChange={this.store.onOpenChange}
+        onClick={this.clickMenu}
         style={{ width: 256, height: 'calc(100vh - 50px)' }}
       >
         <SubMenu
-          key="sub1"
+          key="admin"
           title={
             <span>
               <MailOutlined />
@@ -62,17 +82,19 @@ export default class CommentNav extends Component {
             </span>
           }
         >
-          <Menu.Item key="1">
-            <Link to="/home">主页</Link>
+          <Menu.Item key="/admin/home">
+            <Link to="/admin/home">主页</Link>
           </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="/info">信息页</Link>
+          <Menu.Item key="/admin/info">
+            <Link to="/admin/info">信息页</Link>
           </Menu.Item>
           <Menu.Item key="3">Option 3</Menu.Item>
           <Menu.Item key="4">Option 4</Menu.Item>
         </SubMenu>
-        <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
-          <Menu.Item key="5">Option 5</Menu.Item>
+        <SubMenu key="edit" icon={<AppstoreOutlined />} title="Navigation Two">
+          <Menu.Item key="/edit/test">
+            <Link to={'/edit/test'}>编辑页</Link>
+          </Menu.Item>
           <Menu.Item key="6">Option 6</Menu.Item>
           <SubMenu key="sub3" title="Submenu">
             <Menu.Item key="7">Option 7</Menu.Item>
@@ -91,5 +113,6 @@ export default class CommentNav extends Component {
 }
 
 CommentNav.propTypes = {
-  menuBarStore: PropTypes.object
+  menuBarStore: PropTypes.object,
+  location: PropTypes.object
 };

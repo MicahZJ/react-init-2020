@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import { Provider } from 'mobx-react';
-import AppRoute from './AppRouter'
+import AppRoute from './routers/AppRouter'
 import AppStore from './store/index'
 
 function App () {

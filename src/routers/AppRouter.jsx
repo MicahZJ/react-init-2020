@@ -41,7 +41,7 @@ const routes = [
     path: '/admin',
     component: Tacos,
     requiresAuth: true,
-    routes: [
+    children: [
       {
         path: '/admin/home',
         exact: true,
@@ -54,6 +54,25 @@ const routes = [
         requiresAuth: true,
         component: InfoPage
       },
+      {
+        path: '/admin/test',
+        exact: true,
+        requiresAuth: true,
+        component: NotFound
+      }
+    ]
+  },
+  {
+    path: '/edit',
+    component: Tacos,
+    requiresAuth: true,
+    children: [
+      {
+        path: '/edit/test',
+        exact: true,
+        requiresAuth: true,
+        component: NotFound
+      }
     ]
   },
   {
@@ -95,15 +114,15 @@ function RouteWithSubRoutes(route) {
   
         // 当已经登录，并且跳转路由是login，则进入首页
         if (route.path === authPath && token) {
-          console.log('登录页面强制跳转首页')
+          // console.log('登录页面强制跳转首页')
           return <Redirect to={{ pathname: '/admin/home' }} />
         }
         // 不需要验证登录的页面，当前为登录状态，路由等于login页面，则默认放行
         if (!route.requiresAuth || token || route.path === authPath) {
-          console.log('进入正常页面', route)
-          return <route.component {...props} routes={route.routes} />
+          // console.log('进入正常页面', route)
+          return <route.component {...props} routes={route.children} />
         }
-        console.log('登录失效，重定向登录页')
+        // console.log('登录失效，重定向登录页')
         return <Redirect to={{ pathname: authPath }} />
       }}
     />

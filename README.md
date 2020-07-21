@@ -1,4 +1,4 @@
-## 配置 aes加密
+## 2020-07-21 配置 aes加密
 ### 创建类
 ```
 import CryptoJS from 'crypto-js';

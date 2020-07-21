@@ -1,3 +1,65 @@
+## 配置 aes加密
+### 创建类
+```
+import CryptoJS from 'crypto-js';
+class CryptoFile {
+  constructor () {
+    // 秘钥
+    this.key = CryptoJS.enc.Utf8.parse('CRYPTOJSKEY00000'); // 16位
+    this.iv = CryptoJS.enc.Utf8.parse('CRYPTOJSKEY00000');
+    this.CRYPTOJSKEY = 'CRYPTOJSKEY'
+  }
+  // 加密
+  encrypt(word) {
+    let srcS = CryptoJS.enc.Utf8.parse(word);
+    let encrypted = CryptoJS.AES.encrypt(srcS, this.key, { iv: this.iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+    return encrypted.ciphertext.toString().toUpperCase();
+  }
+  
+  // 解密
+  decrypt(word) {
+    let encryptedHexStr = CryptoJS.enc.Hex.parse(word);
+    let srcS = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+    let decrypt = CryptoJS.AES.decrypt(srcS, this.key, { iv: this.iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 });
+    // eslint-disable-next-line no-debugger
+    // debugger
+    let decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
+    return decryptedStr.toString();
+  }
+}
+export default new CryptoFile()
+```
+### 在拦截器内使用类
+```
+import crypto from './crypto';
+
+const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((resolve, reject) => {
+  type = type.toUpperCase();
+  const config = Object.assign(_config, {
+    method: type,
+    url: url
+  });
+  // get请求走正常
+  if (['GET'].includes(type)) {
+    config.params = crypto.encrypt(JSON.stringify(data));
+  } else { // post增加请求头
+    Object.assign(config, {
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem('token')
+      }
+    });
+    
+    // 封装Data => FormData
+    // const formdata = new FormData();
+    // for (let key in data) {
+    //   formdata.append(key, data[key]);
+    // }
+    config.data = crypto.encrypt(JSON.stringify(data));
+    // console.log('解密', config.data, JSON.parse(crypto.decrypt(config.data)))
+  }
+```
 ## 2020-07-14 配置路由鉴权
 ### 配置AppRouter.jsx
 配置路由数组，用来存储路由数据
@@ -233,6 +295,7 @@ const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((
   } else { // post增加请求头，这里看数据格式，如果是json则需要自己更改
     Object.assign(config, {
       headers: {
+         // 'Content-Type': 'application/json', // 这里自己协商，用formdata还是json
         'Content-Type': 'multipart/form-data',
         'token': localStorage.getItem('token')
       }

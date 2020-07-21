@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import webConfig from './webConfig'
 import ReactDOM from 'react-dom';
+import crypto from './crypto';
+
 import { message, Spin } from 'antd';
 
 // 设置请求路径
@@ -84,27 +86,38 @@ const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((
     url: url
   });
   // get请求走正常
-  if (['GET'].includes(type)) {
+  if (['GET'].includes(type)) { // 我这里是没用加密的，如果用，就把对应代码注释掉就行
+    // 不加密传参
     config.params = data;
+    // 加密传参
+    // config.params = {}
+    // config.params.data = crypto.encrypt(JSON.stringify(data));
+    // config.params.timestamp = timestamp.toString()
   } else { // post增加请求头
     Object.assign(config, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        // 'Content-Type': 'multipart/form-data', // formdata传参
+        'Content-Type': 'application/json', // Json传参， 两种传参方式，自己定，我用的是json
       }
     });
     
-    // 封装Data => FormData
-    const formdata = new FormData();
-    for (let key in data) {
-      formdata.append(key, data[key]);
-    }
+    // 封装Data => FormData，json格式封装成formdata数据类型
+    // const formdata = new FormData();
+    // for (let key in data) {
+    //  formdata.append(key, data[key]);
+    // }
+    // 不加密传参
     config.data = formdata;
+    // 加密传参
+    // config.data = {}
+    // config.data.data = crypto.encrypt(JSON.stringify(data));
+    // config.data.timestamp = timestamp.toString()
   }
   
   axios(config).then((response) => {
-    // 登录失败
-    if (response && (response.data.code !== 200)) {
-      console.error('接口传参报错', response.config.url, '参数', JSON.parse(convert_FormData_to_json2(response.config.data)))
+    // 失败
+   if (response && (response.data.code !== 200)) {
+      console.error('接口->请求未成功，传参报错', response.config.url, '参数', JSON.parse(response.config.data))
       message.info(response.data.msg);
       resolve(response && response.data);
     } else {
@@ -112,11 +125,12 @@ const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((
     }
   })
     .catch((err) => {
-      console.error('接口服务报错', err.config.url)
+      console.error('接口', err.config.url, '服务端报错，报错码->', err.response.status.toString(), '参数->', JSON.parse(err.config.data));
       reject(err);
     });
 })
 
+// formData 转 Json
 let convert_FormData_to_json2 = (formData) => {
   let objData = {};
   formData.forEach((value, key) => objData[key] = value);

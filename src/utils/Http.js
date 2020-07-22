@@ -8,7 +8,12 @@ import { message, Spin } from 'antd';
 
 // 设置请求路径
 axios.defaults.baseURL = webConfig.rootUrl;
-axios.defaults.withCredentials = true;
+axios.defaults.crossDomain = true
+
+// 设置withCredentials的情况下，后端要设置Access-Control-Allow-Origin为你的源地址，
+// 例如http://localhost:8080，不能是*，而且还要设置header(‘Access-Control-Allow-Credentials: true’);
+// 不然会跨域
+// axios.defaults.withCredentials = true;
 
 // 设置post请求头
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
@@ -97,7 +102,7 @@ const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((
     Object.assign(config, {
       headers: {
         // 'Content-Type': 'multipart/form-data', // formdata传参
-        'Content-Type': 'application/json', // Json传参， 两种传参方式，自己定，我用的是json
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8;application/json', // Json传参， 两种传参方式，自己定，我用的是json
       }
     });
     

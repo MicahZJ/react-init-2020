@@ -1,3 +1,31 @@
+## 2020-07-27 配置 moment库
+### 安装
+[momentjs文档](http://momentjs.cn/)
+```
+npm install moment --save   # npm
+yarn add moment             # Yarn
+```
+### 配置antd多于语言支持
+```
+import React, { memo } from 'react'
+import zhCN from 'antd/es/locale/zh_CN'
+import { ConfigProvider } from 'antd'
+import Router from 'src/router'
+import moment from 'moment'//在原有的基础上加上下面三行代码
+import 'moment/locale/zh-cn'
+moment.locale('zh-cn')
+
+const App: React.FC = () => {
+  return (
+    <ConfigProvider locale={zhCN}>
+      <Router />
+    </ConfigProvider>
+  )
+}
+
+export default memo(App)
+```
+``
 ## 2020-07-21 配置 aes加密
 ### 创建类
 ```
@@ -539,36 +567,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will sti

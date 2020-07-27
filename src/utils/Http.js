@@ -142,6 +142,7 @@ let convert_FormData_to_json2 = (formData) => {
   return JSON.stringify(objData);
 }
 
+// get请求
 export const $getData = async (url, data, _config = {}) => {
   let res = await $http(url, data, 'GET', _config)
   if (res.code === 200){
@@ -152,6 +153,7 @@ export const $getData = async (url, data, _config = {}) => {
   // return Promise.resolve(res)
 }
 
+// post请求
 export const $postData = async (url, data, _config = {}) => {
   let res = await $http(url, data, 'POST', _config)
   if (res.code === 200){

@@ -112,7 +112,7 @@ const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((
     //  formdata.append(key, data[key]);
     // }
     // 不加密传参
-    config.data = formdata;
+    config.data = data;
     // 加密传参
     // config.data = {}
     // config.data.data = crypto.encrypt(JSON.stringify(data));

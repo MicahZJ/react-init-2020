@@ -4,9 +4,19 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// 配置antd中文化
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
+import moment from 'moment'; // 在原有的基础上加上下面三行代码
+import 'moment/locale/zh-cn'
+moment.locale('zh-cn');
+// 配置antd中文化
+
 ReactDOM.render(
   // <React.StrictMode>
-  <App />,
+  <ConfigProvider locale={zhCN}>
+    <App />
+  </ConfigProvider>,
   // </React.StrictMode>,
   document.getElementById('root')
 );

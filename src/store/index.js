@@ -2,7 +2,7 @@ import { configure } from 'mobx';
 
 import NavBar from '../component/nav_bar/store'
 import MenuBar from '../component/menu_bar/store'
-
+import RoutersPage from '../routers/routers'
 import HomePage from '../views/home_page/store'
 import InfoPage from '../views/info_page/store'
 import LoginPage from '../views/login_page/store'
@@ -14,7 +14,7 @@ class AppStore {
   constructor () {
     this.navBarStore = new NavBar(this)
     this.menuBarStore = new MenuBar(this)
-  
+    this.routersStore = new RoutersPage(this);
     this.homePageStore = new HomePage(this)
     this.infoStore = new InfoPage(this)
     this.loginStore = new LoginPage(this)

@@ -215,7 +215,7 @@ let Recursion = (route) => (
     {route.children.map((route, i) => {
       console.log('递归路由', route);
       if (route.children && route.children.length > 0) {
-        return Recursion(route.children)
+        return <Recursion {...route}/>
       } else {
         return <RouteWithSubRoutes key={i} {...route}/>
       }

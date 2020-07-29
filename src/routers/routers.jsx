@@ -17,10 +17,6 @@ const testPage = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'
 const LoginPage = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../views/login_page'));
 const NotFound = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../views/404_page'));
 
-// 系统监测
-const SysInterFaceLogPage = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../views/sys_interface_log_page')); // 系统接口日志
-const SysLoginLogPage = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../views/sys_login_log_page')); // 系统登录日志
-const SysJvmLogPage = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../views/sys_jvm_log_page')); // 系统登录日志
 
 // Some folks find value in a centralized route config.
 // A route config is just data. React is great at mapping
@@ -101,7 +97,7 @@ export default class Store {
           id: 31,
           exact: true,
           requiresAuth: true,
-          component: SysInterFaceLogPage,
+          component: testPage,
           title: '系统日志',
         },
         {
@@ -109,7 +105,7 @@ export default class Store {
           id: 32,
           exact: true,
           requiresAuth: true,
-          component: SysLoginLogPage,
+          component: testPage,
           title: '登录日志',
         },
         {
@@ -125,7 +121,7 @@ export default class Store {
               id: 331,
               exact: true,
               requiresAuth: true,
-              component: SysJvmLogPage,
+              component: testPage,
               title: 'Jvm日志',
             },
           ]

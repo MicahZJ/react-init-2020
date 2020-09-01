@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === 'production') {
   rootUrl = 'https://www.xxx.cn/api';
 } else {
   // 开发环境配置
-  rootUrl = 'https://www.xxx.cn/api';
+  rootUrl = 'http://192.168.1.112:3006/api';
 }
 
 const config = {

@@ -9,10 +9,14 @@ export default class Store {
   @observable a = 0
   
   async getData () {
-    let api = '/Login/LoginCheck';
+    let api = '/addUser';
     let requestData = {
-      userNmae: 123,
-      password: 123
+      userName: 123,
+      password: '123',
+      userEmail: 123,
+      userMobile: 123,
+      accountStatus: 123,
+      userSex: 123,
     };
     let res = await $postData(api, requestData).catch((err) => {
       console.log('err', err)

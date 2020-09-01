@@ -103,8 +103,10 @@ const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((
     Object.assign(config, {
       headers: {
         // 'Content-Type': 'multipart/form-data', // formdata传参
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8;application/json', // Json传参， 两种传参方式，自己定，我用的是json
-      }
+        headers: {
+          // 'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
+        }      }
     });
     
     // 封装Data => FormData，json格式封装成formdata数据类型

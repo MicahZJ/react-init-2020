@@ -18,6 +18,7 @@ export default class CommentHomePage extends Component {
   }
   
   componentDidMount() {
+    this.store.getData()
   }
   
   componentWillUnmount() {

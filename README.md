@@ -1,3 +1,63 @@
+## 2020-09-01 配置 rc-queue-anim库
+### 安装
+[rc-queue-anim文档](https://motion.ant.design/api/tween-one-cn)
+```
+npm install rc-queue-anim --save   # npm
+yarn add rc-queue-anim             # Yarn
+```
+### 使用
+注意一点，被QueueAnim包裹的dom元素，一定要加入key关键字，不然是不会起效果的
+```
+import React, { Component } from 'react'
+import Style from './style.styl'
+import PropTypes from 'prop-types';
+import { inject, observer } from 'mobx-react'
+import { withRouter } from 'react-router-dom'
+
+import QueueAnim from 'rc-queue-anim';
+
+@inject('homePageStore')
+@withRouter
+@observer
+
+export default class CommentHomePage extends Component {
+  
+  constructor (props) {
+    super(props)
+    this.store = props.homePageStore
+  }
+  
+  componentDidMount() {
+  }
+  
+  componentWillUnmount() {
+  }
+  
+  out = () => {
+    localStorage.clear();
+    location.reload()
+    // this.props.history.push('login')
+  };
+  
+  render() {
+    return (
+      <QueueAnim
+        delay={150}
+        type={['right', 'left']}
+        ease={['easeOutQuart', 'easeInOutQuart']}>
+        <div key="a" className={Style['home-wrapper']} onClick={() => {this.out()}}>666</div>
+      </QueueAnim>
+    )
+  }
+}
+
+CommentHomePage.propTypes = {
+  homePageStore: PropTypes.object,
+  history: PropTypes.object
+};
+
+```
+
 ## 2020-07-27 配置 moment库
 ### 安装
 [momentjs文档](http://momentjs.cn/)

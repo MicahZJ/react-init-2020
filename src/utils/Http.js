@@ -8,7 +8,7 @@ import { message, Spin } from 'antd';
 
 // 设置请求路径
 axios.defaults.baseURL = webConfig.rootUrl;
-axios.defaults.crossDomain = true
+axios.defaults.crossDomain = true;
 
 // 设置withCredentials的情况下，后端要设置Access-Control-Allow-Origin为你的源地址，
 // 例如http://localhost:8080，不能是*，而且还要设置header(‘Access-Control-Allow-Credentials: true’);
@@ -29,21 +29,22 @@ function showLoading () {
     dom.style.position = 'fixed';
     dom.style.top = '0px';
     dom.style.left = '0px';
+    dom.style.zIndex = '1000';
     dom.style.background = 'rgba(0, 0, 0, 0.4)';
     dom.style.display = 'flex';
     dom.style.justifyContent = 'center';
     dom.style.alignItems = 'center';
     dom.style.width = '100vw';
     dom.style.height = '100vh';
-    document.body.appendChild(dom)
-    ReactDOM.render(<Spin tip="数据请求中，请稍后..." size="large"/>, dom)
+    document.body.appendChild(dom);
+    ReactDOM.render(<Spin tip="数据请求中，请稍后..." size="large"/>, dom);
   }
   requestCount++
 }
 
 // 隐藏loading
 function hideLoading () {
-  requestCount--
+  requestCount--;
   if (requestCount === 0) {
     document.body.removeChild(document.getElementById('loading'))
   }
@@ -62,7 +63,7 @@ axios.interceptors.request.use((config) => {
     hideLoading()
   }
   return Promise.reject(err)
-})
+});
 
 // 返回后拦截
 axios.interceptors.response.use((res) => {
@@ -82,7 +83,7 @@ axios.interceptors.response.use((res) => {
   }
   
   return Promise.reject(err)
-})
+});
 
 const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((resolve, reject) => {
   type = type.toUpperCase();
@@ -121,7 +122,7 @@ const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((
   
   axios(config).then((response) => {
     // 失败
-   if (response && (response.data.code !== 200)) {
+    if (response && (response.data.code !== 200)) {
       console.error('接口->请求未成功，传参报错', response.config.url, '参数', JSON.parse(response.config.data))
       message.info(response.data.msg);
       resolve(response && response.data);
@@ -133,7 +134,7 @@ const $http = (url = '', data = {}, type = 'GET', _config = {}) => new Promise((
       console.error('接口', err.config.url, '服务端报错，报错码->', err.response.status.toString(), '参数->', JSON.parse(err.config.data));
       reject(err);
     });
-})
+});
 
 // formData 转 Json
 let convert_FormData_to_json2 = (formData) => {
@@ -151,7 +152,7 @@ export const $getData = async (url, data, _config = {}) => {
     return Promise.reject(res.data)
   }
   // return Promise.resolve(res)
-}
+};
 
 // post请求
 export const $postData = async (url, data, _config = {}) => {
@@ -162,4 +163,4 @@ export const $postData = async (url, data, _config = {}) => {
     return Promise.reject(res)
   }
   // return Promise.resolve(res)
-}
+};

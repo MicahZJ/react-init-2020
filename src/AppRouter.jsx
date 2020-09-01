@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import asyncComponent from './utils/asyncComponent'
+import asyncComponent from './utils/AsyncComponent'
 import { Link, Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom'
 import { action, observable, computed, runInAction } from 'mobx';
 

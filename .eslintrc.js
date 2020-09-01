@@ -320,7 +320,7 @@ module.exports = {
     
     
     // 强制使用一致的换行风格
-    "linebreak-style": [2, "unix"],
+    // "linebreak-style": [2, "unix"],
     //在JSX中强制布尔属性符号
     "react/jsx-boolean-value": 2,
     //在JSX中验证右括号位置

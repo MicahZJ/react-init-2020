@@ -8,7 +8,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
-const NavBar = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../component/nav_bar2'));
+const NavBar = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../component/nav_bar'));
 const MenuBar = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../component/menu_bar'));
 const homePage = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../views/home_page'));
 const InfoPage = asyncComponent(() => import(/* webpackChunkName: "growCafe" */'../views/info_page'));

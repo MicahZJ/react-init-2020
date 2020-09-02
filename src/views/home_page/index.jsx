@@ -24,19 +24,13 @@ export default class CommentHomePage extends Component {
   componentWillUnmount() {
   }
   
-  out = () => {
-    localStorage.clear();
-    location.reload()
-    // this.props.history.push('login')
-  };
-  
   render() {
     return (
       <QueueAnim
         delay={150}
         type={['right', 'left']}
         ease={['easeOutQuart', 'easeInOutQuart']}>
-        <div key="a" className={Style['home-wrapper']} onClick={() => {this.out()}}>666</div>
+        <div key="a" className={Style['home-wrapper']}>666</div>
       </QueueAnim>
     )
   }

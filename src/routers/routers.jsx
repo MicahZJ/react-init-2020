@@ -3,7 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import asyncComponent from '../utils/AsyncComponent';
 
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Button } from 'antd';
+import { LogoutOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -152,7 +153,10 @@ export default class Store {
 function Tacos({ routes }) {
   return (
     <Layout style={{ height: '100vh', overflow: 'hidden'}}>
-      <Sider width={256} style={{ background: 'white' }} collapsible>
+      <Sider width={256}>
+        <div style={{ height: '30px', color: 'white', background: 'rgba(255, 255, 255, 0.2)', margin: '10px 16px'}}>
+          logo位置
+        </div>
         <MenuBar name={'menu'} router={routes}/>
       </Sider>
       <Layout className="site-layout" style={{ height: '100%', overflow: 'hidden'}}>

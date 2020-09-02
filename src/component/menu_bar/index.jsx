@@ -71,6 +71,7 @@ export default class CommentNav extends Component {
         openKeys={Keys}
         onOpenChange={this.store.onOpenChange}
         onClick={this.clickMenu}
+        theme="dark"
         style={{ width: 256, height: 'calc(100vh - 50px)' }}
       >
         <SubMenu

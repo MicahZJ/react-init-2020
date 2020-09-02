@@ -55,7 +55,7 @@ export default class AppRoute extends Component {
         <NavBar name={'nav'}/>
         {/* {location.pathname !== '/error' && localStorage.getItem('token') ? <NavBar name={'nav'}/> : null} */}
         <Layout>
-          <Sider width={256} style={{ background: 'white' }}>
+          <Sider width={256}>
             <MenuBar name={'menu'}/>
           </Sider>
           {/* {*/}
